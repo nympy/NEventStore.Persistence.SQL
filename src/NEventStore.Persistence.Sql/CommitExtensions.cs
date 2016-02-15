@@ -1,10 +1,12 @@
+using System.Text;
+
 namespace NEventStore.Persistence.Sql
 {
+    using NEventStore.Logging;
+    using NEventStore.Serialization;
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using NEventStore.Logging;
-    using NEventStore.Serialization;
 
     public static class CommitExtensions
     {
@@ -18,7 +20,7 @@ namespace NEventStore.Persistence.Sql
         private const int CheckpointIndex = 7;
         private const int HeadersIndex = 8;
         private const int PayloadIndex = 9;
-        private static readonly ILog Logger = LogFactory.BuildLogger(typeof (CommitExtensions));
+        private static readonly ILog Logger = LogFactory.BuildLogger(typeof(CommitExtensions));
 
         public static ICommit GetCommit(this IDataRecord record, ISerialize serializer, ISqlDialect sqlDialect)
         {
@@ -65,7 +67,13 @@ namespace NEventStore.Persistence.Sql
                 return default(T);
             }
 
-            var bytes = (byte[]) value;
+            if (serializer is JsonSerializer)
+            {
+                var json = (string)value;
+                return json.Length == 0 ? default(T) : serializer.Deserialize<T>(Encoding.UTF8.GetBytes(json));
+            }
+
+            var bytes = (byte[])value;
             return bytes.Length == 0 ? default(T) : serializer.Deserialize<T>(bytes);
         }
     }

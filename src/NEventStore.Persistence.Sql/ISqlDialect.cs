@@ -1,9 +1,9 @@
 namespace NEventStore.Persistence.Sql
 {
+    using NEventStore.Persistence.Sql.SqlDialects;
     using System;
     using System.Data;
     using System.Transactions;
-    using NEventStore.Persistence.Sql.SqlDialects;
 
     public interface ISqlDialect
     {

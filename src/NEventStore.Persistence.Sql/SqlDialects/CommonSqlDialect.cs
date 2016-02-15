@@ -1,9 +1,9 @@
 namespace NEventStore.Persistence.Sql.SqlDialects
 {
+    using NEventStore.Persistence.Sql;
     using System;
     using System.Data;
     using System.Transactions;
-    using NEventStore.Persistence.Sql;
 
     public abstract class CommonSqlDialect : ISqlDialect
     {
@@ -190,8 +190,8 @@ namespace NEventStore.Persistence.Sql.SqlDialects
 
         public virtual DateTime ToDateTime(object value)
         {
-            value = value is decimal ? (long) (decimal) value : value;
-            return value is long ? new DateTime((long) value) : DateTime.SpecifyKind((DateTime) value, DateTimeKind.Utc);
+            value = value is decimal ? (long)(decimal)value : value;
+            return value is long ? new DateTime((long)value) : DateTime.SpecifyKind((DateTime)value, DateTimeKind.Utc);
         }
 
         public virtual NextPageDelegate NextPageDelegate
