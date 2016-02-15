@@ -17,6 +17,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="publish-net46\plugins\persistence\sql\**" target="lib\net46"/>
+    <file src="publish-net451\plugins\persistence\sql\**" target="lib\net451"/>
   </files>
 </package>
