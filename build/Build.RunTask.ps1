@@ -10,4 +10,4 @@ if($task -eq $null) {
 $scriptPath = $(Split-Path -parent $MyInvocation.MyCommand.path)
 
 .$scriptPath\..\dependencies\RestorePackages.ps1
-.$scriptPath\..\dependencies\NEventStore\build\psake.ps1 -scriptPath $scriptPath -t $task -properties @{ build_number=$buildNumber;runPersistenceTests=$runPersistenceTests }
+.$scriptPath\psake.ps1 -scriptPath $scriptPath -t $task -properties @{ build_number=$buildNumber;runPersistenceTests=$runPersistenceTests }

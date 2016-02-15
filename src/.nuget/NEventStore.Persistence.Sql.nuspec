@@ -13,11 +13,10 @@
     <language>es-US</language>
     <tags>events, event sourcing, cqrs, storage, persistence, database, sql</tags>
     <dependencies>
-      <dependency id="NEventStore" version="5.0" />
+      <dependency id="NEventStore" version="5.3" />
     </dependencies>
   </metadata>
   <files>
-     <file src="\NEventStore.Persistence.Sql\bin\$configuration$\NEventStore.Persistence.Sql.dll" target="lib\net4"/>
-    <file src="NEventStore.Persistence.Sql\bin\$configuration$\NEventStore.Persistence.Sql.pdb" target="lib\net4"/>
+    <file src="publish-net46\plugins\persistence\sql\**" target="lib\net46"/>
   </files>
 </package>
