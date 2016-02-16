@@ -195,7 +195,7 @@ namespace NEventStore.Persistence.Sql.SqlDialects
             get { return (q, r) => { } ; }
         }
 
-        public override void AddPayloadParamater(IConnectionFactory connectionFactory, IDbConnection connection, IDbStatement cmd, byte[] payload)
+        public override void AddPayloadParameter(IConnectionFactory connectionFactory, IDbConnection connection, IDbStatement cmd, byte[] payload)
         {
             if (_addPayloadParamater == null)
             {
@@ -213,7 +213,7 @@ namespace NEventStore.Persistence.Sql.SqlDialects
                 else
                 {
                     _addPayloadParamater = (connectionFactory2, connection2, cmd2, payload2) 
-                        => base.AddPayloadParamater(connectionFactory2, connection2, cmd2, payload2);
+                        => base.AddPayloadParameter(connectionFactory2, connection2, cmd2, payload2);
                 }
             }
             _addPayloadParamater(connectionFactory, connection, cmd, payload);

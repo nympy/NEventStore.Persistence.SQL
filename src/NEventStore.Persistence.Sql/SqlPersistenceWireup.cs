@@ -1,16 +1,16 @@
 // ReSharper disable once CheckNamespace
 namespace NEventStore
 {
-    using System;
-    using System.Transactions;
     using NEventStore.Logging;
     using NEventStore.Persistence.Sql;
     using NEventStore.Serialization;
+    using System;
+    using System.Transactions;
 
     public class SqlPersistenceWireup : PersistenceWireup
     {
         private const int DefaultPageSize = 512;
-        private static readonly ILog Logger = LogFactory.BuildLogger(typeof (SqlPersistenceWireup));
+        private static readonly ILog Logger = LogFactory.BuildLogger(typeof(SqlPersistenceWireup));
         private int _pageSize = DefaultPageSize;
 
         public SqlPersistenceWireup(Wireup wireup, IConnectionFactory connectionFactory)

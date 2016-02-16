@@ -183,7 +183,12 @@ namespace NEventStore.Persistence.Sql.SqlDialects
 
         public abstract bool IsDuplicate(Exception exception);
 
-        public virtual void AddPayloadParamater(IConnectionFactory connectionFactory, IDbConnection connection, IDbStatement cmd, byte[] payload)
+        public virtual void AddHeadersParameter(IConnectionFactory connectionFactory, IDbConnection connection, IDbStatement cmd, byte[] payload)
+        {
+            cmd.AddParameter(Headers, payload);
+        }
+
+        public virtual void AddPayloadParameter(IConnectionFactory connectionFactory, IDbConnection connection, IDbStatement cmd, byte[] payload)
         {
             cmd.AddParameter(Payload, payload);
         }

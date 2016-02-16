@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NEventStore.Persistence.Sql.SqlDialects {
+namespace NEventStore.Persistence.PostgreSql {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace NEventStore.Persistence.Sql.SqlDialects {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NEventStore.Persistence.Sql.SqlDialects.PostgreSqlJsonStatements", typeof(PostgreSqlJsonStatements).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NEventStore.Persistence.PostgreSql.PostgreSqlJsonStatements", typeof(PostgreSqlJsonStatements).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

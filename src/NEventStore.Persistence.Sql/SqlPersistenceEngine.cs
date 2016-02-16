@@ -1,5 +1,7 @@
 namespace NEventStore.Persistence.Sql
 {
+    using NEventStore.Logging;
+    using NEventStore.Serialization;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -7,8 +9,6 @@ namespace NEventStore.Persistence.Sql
     using System.Linq;
     using System.Threading;
     using System.Transactions;
-    using NEventStore.Logging;
-    using NEventStore.Serialization;
 
     public class SqlPersistenceEngine : IPersistStreams
     {
@@ -123,7 +123,6 @@ namespace NEventStore.Persistence.Sql
                     query.AddParameter(_dialect.CommitStamp, start);
                     return query.ExecutePagedQuery(statement, (q, r) => { })
                             .Select(x => x.GetCommit(_serializer, _dialect));
-
                 });
         }
 
@@ -241,7 +240,7 @@ namespace NEventStore.Persistence.Sql
                     cmd.AddParameter(_dialect.BucketId, snapshot.BucketId, DbType.AnsiString);
                     cmd.AddParameter(_dialect.StreamId, streamId, DbType.AnsiString);
                     cmd.AddParameter(_dialect.StreamRevision, snapshot.StreamRevision);
-                    _dialect.AddPayloadParamater(_connectionFactory, connection, cmd, _serializer.Serialize(snapshot.Payload));
+                    _dialect.AddPayloadParameter(_connectionFactory, connection, cmd, _serializer.Serialize(snapshot.Payload));
                     return cmd.ExecuteWithoutExceptions(_dialect.AppendSnapshotToCommit);
                 }) > 0;
         }
@@ -340,8 +339,8 @@ namespace NEventStore.Persistence.Sql
                 cmd.AddParameter(_dialect.CommitId, attempt.CommitId);
                 cmd.AddParameter(_dialect.CommitSequence, attempt.CommitSequence);
                 cmd.AddParameter(_dialect.CommitStamp, attempt.CommitStamp);
-                cmd.AddParameter(_dialect.Headers, _serializer.Serialize(attempt.Headers));
-                _dialect.AddPayloadParamater(_connectionFactory, connection, cmd, _serializer.Serialize(attempt.Events.ToList()));
+                _dialect.AddHeadersParameter(_connectionFactory, connection, cmd, _serializer.Serialize(attempt.Headers));
+                _dialect.AddPayloadParameter(_connectionFactory, connection, cmd, _serializer.Serialize(attempt.Events.ToList()));
                 OnPersistCommit(cmd, attempt);
                 var checkpointNumber = cmd.ExecuteScalar(_dialect.PersistCommit).ToLong();
                 return new Commit(
@@ -509,6 +508,7 @@ namespace NEventStore.Persistence.Sql
                 }
                 _streamIdHasher = streamIdHasher;
             }
+
             public string GetHash(string streamId)
             {
                 if (string.IsNullOrWhiteSpace(streamId))
